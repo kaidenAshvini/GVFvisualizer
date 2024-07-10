@@ -20,9 +20,18 @@ public class GuidingVectorField {
     public Point getVec(Path p, Point loc) {
         Double[] tangent = getClosestValueOfT(p, loc, 0.0);
         double correctVector = tangent[1];
-        double powerVector = p.update(tangent[0]).getDist(loc);
-        double theta = Math.asin(correctVector / powerVector);
-        return new Point(Math.sin(theta), Math.cos(theta));
+        Point psfasdfj = p.update(tangent[0]);
+        System.out.println(p.getHeading());
+        Point popin = new Point(3*Math.cos(p.getHeading()), 3*Math.sin(p.getHeading()));
+        if (psfasdfj.x < 0) {
+            popin.x *= -1;
+        }
+        if (psfasdfj.y < 0) {
+            popin.y *= -1;
+        }
+        popin.x += loc.x;
+        popin.y += loc.y;
+        return popin;
     }
 
 }

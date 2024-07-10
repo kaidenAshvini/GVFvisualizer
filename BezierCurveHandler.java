@@ -19,7 +19,7 @@ public class BezierCurveHandler extends Path{
 
     Point p1, p2, p3, p4;
     Point p1a,p2a,p3a,p1b,p2b;
-    double heading;
+    double heading = 0;
 //    the order given by l1, l2, r2, r1
     public BezierCurveHandler(Point p1, Point p2, Point p3, Point p4) {
         this.p1 = p1;

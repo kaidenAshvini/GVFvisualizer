@@ -13,24 +13,24 @@ public class Point {
     public double getY() {return y;}
 
     public double getHeading(Point p) {
-        double heading = 0;
-        if (y <= p.y) {
-            if (x <= p.x) {
-                heading+=0;
-            }
-            else {
-                heading+=90;
-            }
-        }
-        else {
-            if (x <= p.x) {
-                heading+=270;
-            }
-            else {
-                heading+=180;
-            }
-        }
-        return heading + Math.abs(Math.atan(Math.abs(y-p.y)/Math.abs(x-p.x)));
+//        double heading = 0;
+//        if (y <= p.y) {
+//            if (x <= p.x) {
+//                heading+=0;
+//            }
+//            else {
+//                heading+=90;
+//            }
+//        }
+//        else {
+//            if (x <= p.x) {
+//                heading+=270;
+//            }
+//            else {
+//                heading+=180;
+//            }
+//        }
+        return Math.abs(Math.atan(Math.abs(y-p.y)/Math.abs(x-p.x)));
     }
 
     public double getDist(Point p) {
