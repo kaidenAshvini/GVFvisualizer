@@ -52,8 +52,8 @@ public class BezierCurveHandler extends Path{
         double x1 = point0.x; double y1 = point0.y;
         double x2 = point1.x; double y2 = point1.y;
 
-        double nx = x1 + t * (x2-x1);
-        double ny = y1 + t * (y1-y2);
+        double nx = x1 + (t * (x2-x1));
+        double ny = y1 + (t * (y2-y1));
 
         return new Point(nx,ny);
     }

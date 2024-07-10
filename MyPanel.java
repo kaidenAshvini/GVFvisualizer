@@ -21,11 +21,14 @@ public class MyPanel extends JPanel {
         g2D.drawString(title,xsize / 2, 50);
         for (int p = 0; p < list.size(); p++) {
             Point pon = list.get(p);
-            if (p < 1 / 0.05) {
+            if (p < 1 / 0.0005) {
                 g2D.setColor(new Color(125,0,200));
             }
-            else {
+            else if (p % 2 == 0){
                 g2D.setColor(new Color(0,0,0));
+            }
+            else {
+                g2D.setColor(new Color(255,0,0));
             }
             g2D.fillOval((int) pon.x, (int) pon.y,3,3);
         }

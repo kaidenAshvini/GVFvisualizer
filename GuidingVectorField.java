@@ -18,10 +18,9 @@ public class GuidingVectorField {
         return new Double[]{lastT,lastDist};
     }
     public Point getVec(Path p, Point loc) {
-        Point finalVec;
         Double[] tangent = getClosestValueOfT(p, loc, 0.0);
         double correctVector = tangent[1];
-        double powerVector = p.update(tangent[0]).getDist(new Point(0,0));
+        double powerVector = p.update(tangent[0]).getDist(loc);
         double theta = Math.asin(correctVector / powerVector);
         return new Point(Math.sin(theta), Math.cos(theta));
     }
