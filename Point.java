@@ -34,7 +34,7 @@ public class Point {
     }
 
     public double getDist(Point p) {
-        return Math.sqrt(Math.abs(y-p.y) + Math.abs(x-p.x));
+        return Math.sqrt(Math.pow(Math.abs(y-p.y),2) + Math.pow(Math.abs(x-p.x),2));
     }
     public Point scale(double s) {
         return new Point(x*s,y*s);
