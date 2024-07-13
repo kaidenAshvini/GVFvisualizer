@@ -7,28 +7,25 @@ public class GuidingVectorField {
     public Double[] getClosestValueOfT(Path p, Point location, double estimaT) {
         double lastDist = location.getDist(p.update(estimaT));
         Point lastpoint = p.update(estimaT);
+        double lastHeading = 0.0;
         double lastT = estimaT;
+        double xvalue = 0;
         for (int i = (int) (estimaT / step); i < 1 / step; i++) {
-            double thisdist = p.update(estimaT + (i * step)).getDist(location);
+            Point current = p.update(estimaT + (i * step));
+            double thisdist = current.getDist(location);
             if (thisdist < lastDist) {
                 lastDist = thisdist;
                 lastT = estimaT + (i * step);
+                lastHeading = p.getHeading();
+                xvalue = current.x;
             }
         }
-        return new Double[]{lastT,lastDist};
+        return new Double[]{lastT,lastDist,lastHeading,xvalue};
     }
     public Point getVecParallel(Path p, Point loc) {
         Double[] tangent = getClosestValueOfT(p, loc, 0.0);
-        double correctVector = tangent[1];
-        Point psfasdfj = p.update(tangent[0]);
-        System.out.println(p.getHeading());
-        Point popin = new Point(30*Math.sqrt(2)*Math.cos(p.getHeading()), 30*Math.sqrt(2)*Math.sin(p.getHeading()));
-        if (psfasdfj.x < loc.x) {
-            popin.x *= -1;
-        }
-        if (psfasdfj.y > loc.y) {
-            popin.y *= -1;
-        }
+        double lastHeading = tangent[2];
+        Point popin = new Point(30*Math.sqrt(2)*Math.cos(lastHeading), 30*Math.sqrt(2)*Math.sin(lastHeading));
         popin.x += loc.x;
         popin.y += loc.y;
         return popin;
@@ -36,24 +33,32 @@ public class GuidingVectorField {
 
     public Point getVec(Path p, Point loc) {
         Double[] tangent = getClosestValueOfT(p, loc, 0.0);
-        double correctVector = tangent[1];
-        if (correctVector > 30)
-            correctVector = 30;
-        Point psfasdfj = p.update(tangent[0]);
-        System.out.println(p.getHeading());
-        Point popin = new Point(Math.abs(30*Math.sqrt(2)*Math.cos(p.getHeading())), Math.abs(30*Math.sqrt(2)*Math.sin(p.getHeading())));
-        if (psfasdfj.x < loc.x) {
-            popin.x *= -1;
+        double lastHeading = tangent[2];
+        double correction = tangent[1];
+        if (correction > 30) {
+            correction = 30;
         }
-        popin.x += loc.x;
-        popin.y += loc.y;
 
-        Point finalP = new Point(popin.x,popin.y);
-        double xc = Math.cos(Math.PI-p.getHeading()) * correctVector;
-        double yc = Math.sin(Math.PI-p.getHeading()) * correctVector;
-        finalP.x += xc;
-        finalP.y += yc;
-        return finalP;
+        double angleForCos = Math.asin(correction/(30*Math.sqrt(2)));
+        Point popin = new Point(loc.x,loc.y);
+
+        double powerFinal = Math.cos(angleForCos) * (30*Math.sqrt(2));
+        double xcomp = powerFinal*Math.cos(lastHeading+angleForCos);
+        double ycomp = powerFinal*Math.sin(lastHeading+angleForCos);
+
+        double rotAngle = -angleForCos-angleForCos;
+
+        if (tangent[3] > loc.x) {
+            double xT = xcomp;
+            double yT = ycomp;
+            xcomp = Math.cos(rotAngle)*xT - Math.sin(rotAngle)*yT;
+            ycomp = Math.sin(rotAngle)*xT + Math.cos(rotAngle)*yT;
+        }
+
+        popin.x += xcomp;
+        popin.y += ycomp;
+
+        return popin;
     }
 
 }

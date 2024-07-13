@@ -32,9 +32,9 @@ public class BezierCurveHandler extends Path{
         this.p1 = start;
         double x = start.x;
         double y = start.y;
-        this.p2 = new Point(x+width,y);
+        this.p2 = new Point(x,y+height);
         this.p3 = new Point(x+width,y+height);
-        this.p4 = new Point(x+width,y+height);
+        this.p4 = new Point(x+width,y);
     }
     public Point update(double t) {
         p1a = getPointOnLine(p1,p2,t);
