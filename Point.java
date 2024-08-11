@@ -30,7 +30,7 @@ public class Point {
 //                heading+=180;
 //            }
 //        }
-        return Math.abs(Math.atan(Math.abs(y-p.y)/Math.abs(x-p.x)));
+        return (Math.atan((y-p.y)/(x-p.x)));
     }
 
     public double getDist(Point p) {
