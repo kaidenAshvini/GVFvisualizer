@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Date;
+
 public class BezierCurveHandler extends Path{
 //    one line = P(1-t) + P(T)
 //    t is parameterized!
@@ -19,6 +22,7 @@ public class BezierCurveHandler extends Path{
 
     Point p1, p2, p3, p4;
     Point p1a,p2a,p3a,p1b,p2b;
+    Point unitVec;
     double heading = 0;
 //    the order given by l1, l2, r2, r1
     public BezierCurveHandler(Point p1, Point p2, Point p3, Point p4) {
@@ -45,6 +49,7 @@ public class BezierCurveHandler extends Path{
         p2b = getPointOnLine(p2a,p3a,t);
 
         heading = p1b.getHeading(p2b);
+        unitVec = p1b.getUnitVec(p2b);
 
         return getPointOnLine(p1b,p2b,t);
     }
@@ -55,10 +60,11 @@ public class BezierCurveHandler extends Path{
         double nx = x1 + (t * (x2-x1));
         double ny = y1 + (t * (y2-y1));
 
-        return new Point(nx,ny);
+        return new Point(nx,ny,t);
     }
 
     public double getHeading() {
         return heading;
     }
+    public Point getHeadingVec() { return unitVec; }
 }
